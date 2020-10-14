@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">new_sample</string>
+    <string name="error_triangle_area">Please enter a true value. Ex: 5.4.3 or 9.11.16.</string>
 </resources>

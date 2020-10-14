@@ -2,13 +2,20 @@ package com.example.new_sample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.usage.ConfigurationStats;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "TriangleAreaCalculator";
+    private static final int FIRST_INDEX = 0;
+    private static final int SECOND_INDEX = 1;
+    private static final int THIRD_INDEX = 2;
+    private static final String REGEX_STRING = "\\.";
     private Button b1;
     private Button b2;
     private Button b3;
@@ -28,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button b_dot;
     private Button b_para1;
     private Button b_para2;
+    private Button buttonArea;
     private TextView t1;
     private TextView t2;
     private final char ADDITION = '+';
@@ -294,6 +302,22 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        buttonArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] inputs = t1.getText().toString().split(REGEX_STRING);
+                if (inputs.length < 3) {
+                    t2.setText(R.string.error_triangle_area);
+                    t1.setText("");
+                } else {
+                    t2.setText("");
+                    float area = CustomTriangle.getArea(Integer.valueOf(inputs[FIRST_INDEX]), Integer.valueOf(inputs[SECOND_INDEX]), Integer.valueOf(inputs[THIRD_INDEX]));
+                    Log.d(TAG, String.valueOf(area));
+                    t1.setText(String.valueOf(area));
+                }
+            }
+        });
     }
 
     private void viewSetup() {
@@ -318,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
         b_para2 = findViewById(R.id.button_para2);
         t1 = findViewById(R.id.input);
         t2 = findViewById(R.id.output);
+        buttonArea = findViewById(R.id.buttonArea);
     }
 
     private void operation() {
